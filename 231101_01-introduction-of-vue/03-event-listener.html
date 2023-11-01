@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id = "app">
+    <button v-on:click="increment">{{ count }}</button>
+    <!-- v-on: 이벤트 리스너! / @는 v-on의 축약형 -->
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const count = ref(0)
+        // vue 에서는 모든 변수를 const로 사용하고, (일부 재할당이 필요한 경우 let 이용하나 빈도 드물다)
+        const increment = function() {
+          count.value++ // count++으로 하면 오류가 난다! / 객체 주소는 변함이 없다
+        }
+        return {
+          count, 
+          increment
+        }
+      }
+    })
+    
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
