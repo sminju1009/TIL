@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{ inputText1 }}</p>
+    <input type="text" @input="onInput" :value="inputText1">
+    <!-- 한글은 1번 방법으로 써야  -->
+    <p>{{ inputText2 }}</p>
+    <input type="text" v-model="inputText2">
+    <!-- v모델이 양방향 기능임
+    주의사항: 한글은 약간 동작이 이상하다.
+    이거는 영어 처리와 다른 문자들에게 일어나는 현상! -->
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const inputText1 = ref('')
+        const inputText2 = ref('')
+        const onInput = function (event) {
+          inputText1.value = event.currentTarget.value
+        }
+        return {
+          inputText1, 
+          onInput, 
+        inputText2
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

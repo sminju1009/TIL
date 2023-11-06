@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Binding to Objects -->
+    <div :style="{ color: activeColor, fontSize: fontSize + 'px' }">Text</div>
+    <div :style="{ fontSize: fontSize + 'px' }">Text</div>
+    <div :style="styleObj">Text</div>
+    <!-- 폰트 사이즈가 커지지 않았던 이유? - fontSize: fontSize + 'px' 여기가 문제다! 
+    fontSize: fontSize.value + 'px'로 해야 적용된다.
+    그런데 activeColor는 .value를 안해도 되느냐?
+    반응형 변수가 다른 반응형 객체의 속성값으로 들어갈 때는 auto unwrap된다.
+    근데 왜 fontsize는? = > 오토언랩 주의사항 참고자료
+    오토언랩이 되려면 ref 객체가 최종 결과물이어야 하는데, 
+    activeColor는 최종 결과물인데 fontsize는 그게 아님 -->
+
+    <!-- Binding to Arrays -->
+    <div :style="[styleObj, styleObj2]">Text</div>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const activeColor = ref('crimson')
+        const fontSize = ref(50)
+        const styleObj = ref({
+          color : activeColor, 
+          fontSize: fontSize.value + 'px'
+        })
+        const styleObj2 = ref({
+          color: 'blue', 
+          border: '1px solid black'
+        })
+        return {
+          activeColor,
+          fontSize, 
+          styleObj, 
+          styleObj2
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
